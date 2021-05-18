@@ -1,11 +1,11 @@
 package com.atguigu.git;
 
-import jakarta.validation.Valid;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import javax.validation.Valid;
 
 @SpringBootApplication
 @RestController
@@ -22,6 +22,8 @@ public class UserApplication {
         //如果检验出了问题，就返回错误信息
         //这里我们返回的是全部的错误信息，实际中可根据bindingResult的方法根据需要返回自定义的信息。
         //通常的解决方案为：JSR-303 + 全局ExceptionHandler
+        //System.out.println(bindingResult.hasErrors());
+        System.out.println(user.getName() + ":" + user.getAge());
         if (bindingResult.hasErrors()){
             return bindingResult.getAllErrors();
         }

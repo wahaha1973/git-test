@@ -1,9 +1,10 @@
 package com.atguigu.git;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 public class User {
@@ -16,6 +17,10 @@ public class User {
 
     //不允许为空，并且年龄的最小值为18
     @NotNull
-    @Min(18)
+    @Min(value = 18,message = "不允许为空，并且年龄的最小值为18")
     private Integer age;
+
+    //这里添加我们自己的自定义注解
+    @IsMobile
+    private String phone;
 }
