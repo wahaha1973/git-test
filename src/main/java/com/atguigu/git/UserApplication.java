@@ -3,10 +3,18 @@ package com.atguigu.git;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import javax.validation.Valid;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+import java.util.HashSet;
+
+@Validated
 @SpringBootApplication
 @RestController
 public class UserApplication {
@@ -28,5 +36,20 @@ public class UserApplication {
             return bindingResult.getAllErrors();
         }
         return "OK";
+    }
+
+    @RequestMapping("/test2")
+    public String test2(@IsMobile String phone){
+       return phone + " ok";
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseBody
+    public Object handleConstraintViolationException(ConstraintViolationException cve) {
+        HashSet<String> messageSet = new HashSet();
+        for (ConstraintViolation constraintViolation : cve.getConstraintViolations()) {
+            messageSet.add(constraintViolation.getMessage());
+        }
+        return messageSet;
     }
 }
